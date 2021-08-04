@@ -1,0 +1,13 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  background: #f0f2f5;
+}
+
+.fb-text-logo {
+  margin-left: -40px;
+}
+
+.btn-success {
+  background-color: #42b72a;
+}
