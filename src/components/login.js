@@ -3,8 +3,16 @@ import fbTextSVG from "../fb-text.svg";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import Signup from "./Signup";
-const Login = () => {
+import { loginUser } from "./thunks";
+import { connect } from "react-redux";
+import { useHistory } from "react-router";
+const Login = ({ onLoginPressed }) => {
   const [showSignup, setShowSignup] = useState(false);
+
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+
+  const history = useHistory();
 
   const handleCloseSignup = () => setShowSignup(false);
   const handleShowSignup = () => setShowSignup(true);
@@ -43,7 +51,10 @@ const Login = () => {
                           className="form-control"
                           id="exampleInputEmail1"
                           aria-describedby="emailHelp"
-                          placeholder="Email or Phone Number"
+                          placeholder="Email"
+                          value={emailInput}
+                          onChange={(e) => setEmailInput(e.target.value)}
+                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -52,14 +63,31 @@ const Login = () => {
                           className="form-control"
                           id="exampleInputPassword1"
                           placeholder="Password"
+                          value={passwordInput}
+                          onChange={(e) => setPasswordInput(e.target.value)}
+                          required
                         />
                       </div>
 
                       <button
-                        type="submit"
+                        type="button"
                         className="btn btn-primary w-100 fw-bold"
+                        onClick={async () => {
+                          if (emailInput && passwordInput) {
+                            let result = await onLoginPressed(
+                              emailInput,
+                              passwordInput
+                            );
+                            console.log(result);
+                            if (result) history.push("/home");
+                            else {
+                              setEmailInput("");
+                              setPasswordInput("");
+                            }
+                          }
+                        }}
                       >
-                        Login
+                        Log In
                       </button>
                     </form>
                     <hr />
@@ -102,4 +130,9 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  onLoginPressed: (email, password) => dispatch(loginUser(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+// export default Login;

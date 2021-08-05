@@ -7,7 +7,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Login from "./components/Login";
-// import "bootstrap/dist/js/bootstrap.js";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
-        {/* <Route path="/signup" component={Signup} /> */}
+        <Route path="/home" component={Home} />
       </Switch>
     </Router>
   );
