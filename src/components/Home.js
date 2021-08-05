@@ -1,5 +1,11 @@
-const Home = () => {
+import { connect } from "react-redux";
+
+const Home = ({ user }) => {
   return <h1>Home Page</h1>;
 };
 
-export default Home;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Home);

@@ -6,7 +6,7 @@ import Signup from "./Signup";
 import { loginUser } from "./thunks";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
-const Login = ({ onLoginPressed }) => {
+const Login = ({ user, onLoginPressed }) => {
   const [showSignup, setShowSignup] = useState(false);
 
   const [emailInput, setEmailInput] = useState("");
@@ -16,9 +16,10 @@ const Login = ({ onLoginPressed }) => {
 
   const handleCloseSignup = () => setShowSignup(false);
   const handleShowSignup = () => setShowSignup(true);
-
   return (
     <div className="main">
+      {user.length === 0 ? null : history.push("/home")}
+
       <div className="container">
         <div className="row justify-content-center align-items-center vh-100">
           <div className="col-md-5">
@@ -78,7 +79,6 @@ const Login = ({ onLoginPressed }) => {
                               emailInput,
                               passwordInput
                             );
-                            console.log(result);
                             if (result) history.push("/home");
                             else {
                               setEmailInput("");
@@ -130,9 +130,12 @@ const Login = ({ onLoginPressed }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onLoginPressed: (email, password) => dispatch(loginUser(email, password)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
-// export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
