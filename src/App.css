@@ -11,3 +11,22 @@ body {
 .btn-success {
   background-color: #42b72a;
 }
+
+#signUpTags {
+  font-size: 12px;
+}
+
+#card-gender {
+  width: 60%;
+}
+
+#modal-close-btn {
+  background-color: transparent;
+  border: transparent;
+  color: grey;
+  font-size: 25px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

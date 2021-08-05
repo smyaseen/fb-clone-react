@@ -4,10 +4,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
-import Login from "./components/login";
+import Login from "./components/Login";
 // import "bootstrap/dist/js/bootstrap.js";
 
 function App() {
@@ -20,6 +19,7 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
+        {/* <Route path="/signup" component={Signup} /> */}
       </Switch>
     </Router>
   );
