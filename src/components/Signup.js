@@ -1,4 +1,17 @@
-const Signup = ({ closeModal }) => {
+import React, { useState } from "react";
+import { signupUser } from "./thunks";
+import { connect } from "react-redux";
+import { useHistory } from "react-router";
+
+const Signup = ({ closeModal, onSignupPressed }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [gender, setGender] = useState("");
+  const history = useHistory();
+
   return (
     <form>
       <div className="mb-3">
@@ -10,6 +23,7 @@ const Signup = ({ closeModal }) => {
               id="inputFirstName"
               aria-describedby="firstNameHelp"
               placeholder="First Name"
+              onChange={(e) => setFirstName(e.target.value)}
               required
             />
           </div>
@@ -20,6 +34,7 @@ const Signup = ({ closeModal }) => {
               id="inputLastName"
               aria-describedby="lastNameHelp"
               placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
               required
             />
           </div>
@@ -32,6 +47,7 @@ const Signup = ({ closeModal }) => {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -44,6 +60,7 @@ const Signup = ({ closeModal }) => {
               id="exampleInputPassword"
               aria-describedby="passwordHelp"
               placeholder="New Password"
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -56,7 +73,7 @@ const Signup = ({ closeModal }) => {
               className="form-control"
               id="exampleInputMonth"
               aria-describedby="monthHelp"
-              value="2021-01"
+              onChange={(e) => setBirthday(e.target.value)}
               required
             />
           </div>
@@ -73,6 +90,8 @@ const Signup = ({ closeModal }) => {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
+                    value="male"
+                    onChange={(e) => setGender(e.target.value)}
                   />
                 </div>
               </div>
@@ -86,6 +105,8 @@ const Signup = ({ closeModal }) => {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault2"
+                    value="male"
+                    onChange={(e) => setGender(e.target.value)}
                   />
                 </div>
               </div>
@@ -96,7 +117,28 @@ const Signup = ({ closeModal }) => {
           <div className="col d-flex justify-content-center">
             <button
               type="button"
-              onClick={closeModal}
+              onClick={async () => {
+                if (email && password) {
+                  console.log(gender + " " + birthday);
+
+                  let result = await onSignupPressed(
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    birthday,
+                    gender
+                  );
+
+                  if (result) history.push("/home");
+                  else {
+                    setEmail("");
+                    setPassword("");
+                  }
+
+                  closeModal();
+                }
+              }}
               className="btn btn-success w-50 fw-bold"
             >
               Sign Up
@@ -108,4 +150,9 @@ const Signup = ({ closeModal }) => {
   );
 };
 
-export default Signup;
+const mapDispatchToProps = (dispatch) => ({
+  onSignupPressed: (email, password, firstName, lastName, dOB, gender) =>
+    dispatch(signupUser(email, password, firstName, lastName, dOB, gender)),
+});
+
+export default connect(null, mapDispatchToProps)(Signup);

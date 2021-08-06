@@ -4,6 +4,15 @@
       "id": "1",
       "email": "john@doe.com",
       "password": "123"
+    },
+    {
+      "id": 2,
+      "email": "admin@admin.com",
+      "password": "smy",
+      "firstName": "sm",
+      "lastName": "y",
+      "dateOfBirth": "2021-08-05",
+      "gender": "male"
     }
   ]
 }

@@ -4,8 +4,8 @@ export const loadUser = (user) => ({
   payload: { user },
 });
 
-export const SET_USER = "SET_USER";
-export const setUser = (user) => ({
-  type: SET_USER,
+export const SIGNUP_USER = "SIGNUP_USER";
+export const signupUser = (user) => ({
+  type: SIGNUP_USER,
   payload: { user },
 });
