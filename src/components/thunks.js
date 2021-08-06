@@ -1,4 +1,13 @@
-import { loadUser } from "./actions";
+import { loadUser, signupUser, logout_user } from "./actions";
+
+let idCount = 0;
+
+(async () => {
+  const res = await fetch("http://localhost:5000/users");
+  const data = await res.json();
+
+  idCount = data.length;
+})();
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
@@ -28,12 +37,12 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 };
 
-export const signupUser =
+export const signupUserThunk =
   (userEmail, userPassword, userFirstName, userLastName, userDOB, userGender) =>
   async (dispatch) => {
     try {
       const user = {
-        id: 2,
+        id: ++idCount,
         email: userEmail,
         password: userPassword,
         firstName: userFirstName,
@@ -52,7 +61,7 @@ export const signupUser =
 
       const data = await res.json();
 
-      dispatch(loadUser(data));
+      dispatch(signupUser(data));
 
       return true;
     } catch (e) {
@@ -60,6 +69,16 @@ export const signupUser =
       return false;
     }
   };
+
+export const logoutUser = () => async (dispatch) => {
+  try {
+    dispatch(logout_user(""));
+    return true;
+  } catch (e) {
+    dispatch(displayAlert(e.message));
+    return false;
+  }
+};
 
 export const displayAlert = (text) => () => {
   alert(text);

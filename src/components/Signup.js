@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signupUser } from "./thunks";
+import { signupUserThunk } from "./thunks";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -11,7 +11,9 @@ const Signup = ({ closeModal, onSignupPressed }) => {
   const [birthday, setBirthday] = useState("");
   const [gender, setGender] = useState("");
   const history = useHistory();
-
+  const routeChangeToHome = () => {
+    history.push("/home");
+  };
   return (
     <form>
       <div className="mb-3">
@@ -119,8 +121,6 @@ const Signup = ({ closeModal, onSignupPressed }) => {
               type="button"
               onClick={async () => {
                 if (email && password) {
-                  console.log(gender + " " + birthday);
-
                   let result = await onSignupPressed(
                     email,
                     password,
@@ -130,7 +130,7 @@ const Signup = ({ closeModal, onSignupPressed }) => {
                     gender
                   );
 
-                  if (result) history.push("/home");
+                  if (result) routeChangeToHome();
                   else {
                     setEmail("");
                     setPassword("");
@@ -152,7 +152,9 @@ const Signup = ({ closeModal, onSignupPressed }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   onSignupPressed: (email, password, firstName, lastName, dOB, gender) =>
-    dispatch(signupUser(email, password, firstName, lastName, dOB, gender)),
+    dispatch(
+      signupUserThunk(email, password, firstName, lastName, dOB, gender)
+    ),
 });
 
 export default connect(null, mapDispatchToProps)(Signup);

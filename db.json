@@ -13,6 +13,42 @@
       "lastName": "y",
       "dateOfBirth": "2021-08-05",
       "gender": "male"
+    },
+    {
+      "id": 3,
+      "email": "john@smith.com",
+      "password": "asd",
+      "firstName": "john",
+      "lastName": "smith",
+      "dateOfBirth": "2021-08-05",
+      "gender": "male"
+    },
+    {
+      "id": 4,
+      "email": "sareena@example.com",
+      "password": "tennis",
+      "firstName": "sareena",
+      "lastName": "williams",
+      "dateOfBirth": "2021-08-03",
+      "gender": "male"
+    },
+    {
+      "id": 5,
+      "email": "david@fifa.com",
+      "password": "football",
+      "firstName": "david",
+      "lastName": "beckham",
+      "dateOfBirth": "2021-08-02",
+      "gender": "male"
+    },
+    {
+      "id": 6,
+      "email": "ex@ex.com",
+      "password": "ex",
+      "firstName": "ex",
+      "lastName": "ex",
+      "dateOfBirth": "2021-08-02",
+      "gender": "male"
     }
   ]
 }

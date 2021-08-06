@@ -1,4 +1,4 @@
-import { LOAD_USER, SIGNUP_USER } from "./actions";
+import { LOAD_USER, SIGNUP_USER, LOGOUT_USER } from "./actions";
 
 export const user = (state = [], action) => {
   const { type, payload } = action;
@@ -9,6 +9,10 @@ export const user = (state = [], action) => {
       return user;
     }
     case SIGNUP_USER: {
+      const { user } = payload;
+      return user;
+    }
+    case LOGOUT_USER: {
       const { user } = payload;
       return user;
     }

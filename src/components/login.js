@@ -6,19 +6,23 @@ import Signup from "./Signup";
 import { loginUser } from "./thunks";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
+
 const Login = ({ user, onLoginPressed }) => {
   const [showSignup, setShowSignup] = useState(false);
 
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-
   const history = useHistory();
+
+  const routeChangeToHome = () => {
+    history.push("/home");
+  };
 
   const handleCloseSignup = () => setShowSignup(false);
   const handleShowSignup = () => setShowSignup(true);
   return (
     <div className="main">
-      {user.length === 0 ? null : history.push("/home")}
+      {/* {user.length === 0 ? null : history.push("/home")} */}
 
       <div className="container">
         <div className="row justify-content-center align-items-center vh-100">
@@ -79,7 +83,7 @@ const Login = ({ user, onLoginPressed }) => {
                               emailInput,
                               passwordInput
                             );
-                            if (result) history.push("/home");
+                            if (result) routeChangeToHome();
                             else {
                               setEmailInput("");
                               setPasswordInput("");
