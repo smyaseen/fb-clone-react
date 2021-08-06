@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { logoutUser } from "./thunks";
+import home from "./home.png";
 
 const Home = ({ user, onLogoutPressed }) => {
   const history = useHistory();
@@ -17,8 +18,10 @@ const Home = ({ user, onLogoutPressed }) => {
           <Navbar.Brand href="#home">Facebook</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
+            <Nav className="m-auto">
+              <Nav.Link href="#home" id="homeLogoParent">
+                <img src={home} id="homeLogo" alt="home" />
+              </Nav.Link>
             </Nav>
             <Nav className="ms-auto">
               <Nav.Link

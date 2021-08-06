@@ -30,3 +30,12 @@ body {
   top: 0;
   right: 0;
 }
+
+#homeLogo {
+  width: 20px;
+  height: 20px;
+}
+
+#homeLogoParent {
+  border-bottom: 2px solid blue;
+}
