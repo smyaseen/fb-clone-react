@@ -17,11 +17,15 @@ const Home = ({ user, allPosts, onLogoutPressed, onEnterPressed }) => {
   };
 
   const makePostOnEnter = (e) => {
-    e.keyCode === 13 ? (post ? onEnterPressed(user, post) : null) : null;
+    if (e.keyCode === 13) {
+      if (post) {
+        onEnterPressed(user, post);
+      }
+    }
   };
+
   return (
     <div>
-      {console.log(allPosts)}
       {user.length === 0 ? routeChangeToLogin() : null}
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>

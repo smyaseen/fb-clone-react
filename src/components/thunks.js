@@ -1,4 +1,5 @@
 import { loadUser, signupUser, logout_user, load_posts } from "./actions";
+import firebase from "./Firebase";
 
 let idCount = 0;
 
@@ -7,6 +8,40 @@ let idCount = 0;
   const data = await res.json();
 
   data.map((user) => (idCount = user.id > idCount ? user.id : idCount));
+})();
+
+(async () => {
+  try {
+    const db = firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true,
+    });
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var user = firebase.auth().currentUser;
+
+        if (user != null) {
+          var io = user.uid;
+          window.alert("success " + io);
+        }
+      }
+    });
+
+    const users = db
+      .collection("users")
+      .where("author", "==", user.uid)
+      .get()
+      .doc("BdGPFfUgFYnt3e6LqhmH");
+    const doc = await users.get();
+    if (!doc.exists) {
+      console.log("No such document!");
+    } else {
+      console.log("Document data:", doc.data());
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
 })();
 
 export const loginUser = (email, password) => async (dispatch) => {
