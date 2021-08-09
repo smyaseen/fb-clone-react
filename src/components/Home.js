@@ -17,13 +17,8 @@ const Home = ({ user, allPosts, onLogoutPressed, onEnterPressed }) => {
   };
 
   const makePostOnEnter = (e) => {
-    if (e.keyCode === 13) {
-      if (post) {
-        onEnterPressed(user, post);
-      }
-    }
+    e.keyCode === 13 ? (post ? onEnterPressed(user, post) : null) : null;
   };
-
   return (
     <div>
       {console.log(allPosts)}
