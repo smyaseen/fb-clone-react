@@ -1,54 +1,41 @@
 {
   "users": [
     {
-      "id": "1",
-      "email": "john@doe.com",
-      "password": "123"
-    },
-    {
-      "id": 2,
-      "email": "admin@admin.com",
+      "id": 7,
+      "email": "smy@smy.com",
       "password": "smy",
-      "firstName": "sm",
-      "lastName": "y",
-      "dateOfBirth": "2021-08-05",
+      "firstName": "smy",
+      "lastName": "smy",
+      "dateOfBirth": "2021-08-02",
       "gender": "male"
     },
     {
-      "id": 3,
+      "id": 8,
       "email": "john@smith.com",
-      "password": "asd",
+      "password": "john",
       "firstName": "john",
       "lastName": "smith",
-      "dateOfBirth": "2021-08-05",
-      "gender": "male"
-    },
-    {
-      "id": 4,
-      "email": "sareena@example.com",
-      "password": "tennis",
-      "firstName": "sareena",
-      "lastName": "williams",
-      "dateOfBirth": "2021-08-03",
-      "gender": "male"
-    },
-    {
-      "id": 5,
-      "email": "david@fifa.com",
-      "password": "football",
-      "firstName": "david",
-      "lastName": "beckham",
       "dateOfBirth": "2021-08-02",
       "gender": "male"
+    }
+  ],
+  "posts": [
+    {
+      "id": 7,
+      "firstName": "smy",
+      "lastName": "smy",
+      "posts": [
+        "something",
+        "any"
+      ]
     },
     {
-      "id": 6,
-      "email": "ex@ex.com",
-      "password": "ex",
-      "firstName": "ex",
-      "lastName": "ex",
-      "dateOfBirth": "2021-08-02",
-      "gender": "male"
+      "id": 8,
+      "firstName": "john",
+      "lastName": "smith",
+      "posts": [
+        "day dreaming"
+      ]
     }
   ]
 }

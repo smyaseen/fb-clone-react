@@ -22,8 +22,6 @@ const Login = ({ user, onLoginPressed }) => {
   const handleShowSignup = () => setShowSignup(true);
   return (
     <div className="main">
-      {/* {user.length === 0 ? null : history.push("/home")} */}
-
       <div className="container">
         <div className="row justify-content-center align-items-center vh-100">
           <div className="col-md-5">

@@ -15,3 +15,9 @@ export const logout_user = (user) => ({
   type: LOGOUT_USER,
   payload: { user },
 });
+
+export const LOAD_POSTS = "LOAD_POSTS";
+export const load_posts = (posts) => ({
+  type: LOAD_POSTS,
+  payload: { posts },
+});

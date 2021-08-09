@@ -1,4 +1,4 @@
-import { loadUser, signupUser, logout_user } from "./actions";
+import { loadUser, signupUser, logout_user, load_posts } from "./actions";
 
 let idCount = 0;
 
@@ -6,13 +6,16 @@ let idCount = 0;
   const res = await fetch("http://localhost:5000/users");
   const data = await res.json();
 
-  idCount = data.length;
+  data.map((user) => (idCount = user.id > idCount ? user.id : idCount));
 })();
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
     const res = await fetch("http://localhost:5000/users");
     const data = await res.json();
+
+    const resPosts = await fetch("http://localhost:5000/posts");
+    const dataPosts = await resPosts.json();
 
     let userFound;
 
@@ -25,6 +28,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
     if (userFound) {
       dispatch(loadUser(userFound));
+      dispatch(load_posts(dataPosts));
     } else {
       const errorMessage = { code: 403, message: "wrong user or pass" };
       throw errorMessage;
@@ -59,9 +63,25 @@ export const signupUserThunk =
         body: JSON.stringify(user),
       });
 
+      const postRes = await fetch("http://localhost:5000/posts", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          posts: [],
+        }),
+      });
+
       const data = await res.json();
 
+      const postData = await postRes.json();
+
       dispatch(signupUser(data));
+      dispatch(load_posts(postData));
 
       return true;
     } catch (e) {
@@ -73,7 +93,39 @@ export const signupUserThunk =
 export const logoutUser = () => async (dispatch) => {
   try {
     dispatch(logout_user(""));
+    dispatch(loadUser(""));
     return true;
+  } catch (e) {
+    dispatch(displayAlert(e.message));
+    return false;
+  }
+};
+
+export const makePost = (user, post) => async (dispatch, getState) => {
+  try {
+    const allPosts = getState().posts;
+
+    let posts = [];
+
+    allPosts.map((usr) => (usr.id === user.id ? (posts = usr["posts"]) : usr));
+    posts.push(post);
+
+    const data = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      posts: posts,
+    };
+
+    const res = await fetch(`http://localhost:5000/posts/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    dispatch(load_posts(allPosts));
   } catch (e) {
     dispatch(displayAlert(e.message));
     return false;
