@@ -11,36 +11,17 @@ let idCount = 0;
 })();
 
 (async () => {
-  try {
-    const db = firebase.firestore();
-    db.settings({
-      timestampsInSnapshots: true,
-    });
+  const db = firebase.firestore();
+  db.settings({
+    timestampsInSnapshots: true,
+  });
 
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        var user = firebase.auth().currentUser;
-
-        if (user != null) {
-          var io = user.uid;
-          window.alert("success " + io);
-        }
-      }
-    });
-
-    const users = db
-      .collection("users")
-      .where("author", "==", user.uid)
-      .get()
-      .doc("BdGPFfUgFYnt3e6LqhmH");
-    const doc = await users.get();
-    if (!doc.exists) {
-      console.log("No such document!");
-    } else {
-      console.log("Document data:", doc.data());
-    }
-  } catch (e) {
-    console.log(e.message);
+  const users = db.collection("users").doc("BdGPFfUgFYnt3e6LqhmH");
+  const doc = await users.get();
+  if (!doc.exists) {
+    console.log("No such document!");
+  } else {
+    console.log("Document data:", doc.data());
   }
 })();
 
