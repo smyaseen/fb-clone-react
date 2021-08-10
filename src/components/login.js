@@ -15,6 +15,7 @@ const Login = ({ user, onLoginPressed }) => {
   const history = useHistory();
 
   useEffect(() => {
+    //
     if (user["firstName"]) {
       (async () => {
         await Promise.resolve("resolve");
