@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Navbar, Card, Nav, Container, NavDropdown } from "react-bootstrap";
 import { logoutUser, makePost } from "./thunks";
@@ -12,10 +12,6 @@ const Home = ({ user, allPosts, onLogoutPressed, onEnterPressed }) => {
   const history = useHistory();
   let post;
 
-  const routeChangeToLogin = () => {
-    history.push("/login");
-  };
-
   const makePostOnEnter = (e) => {
     if (e.keyCode === 13) {
       if (post) {
@@ -24,9 +20,17 @@ const Home = ({ user, allPosts, onLogoutPressed, onEnterPressed }) => {
     }
   };
 
+  useEffect(() => {
+    if (!user["firstName"]) {
+      (async () => {
+        await Promise.resolve("resolve");
+        history.push("/login");
+      })();
+    }
+  }, [user, history]);
+
   return (
     <div>
-      {user.length === 0 ? routeChangeToLogin() : null}
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand href="#home">
@@ -57,7 +61,6 @@ const Home = ({ user, allPosts, onLogoutPressed, onEnterPressed }) => {
                 <NavDropdown.Item
                   href="#action/3.4"
                   onClick={() => {
-                    routeChangeToLogin();
                     onLogoutPressed();
                   }}
                 >
@@ -87,26 +90,30 @@ const Home = ({ user, allPosts, onLogoutPressed, onEnterPressed }) => {
           </div>
           <div className="row mt-2">
             <button className="btn">
-              <img id="addPhotoIcon" src={addPhoto} /> Add Photo
+              <img id="addPhotoIcon" src={addPhoto} alt="add pic" /> Add Photo
             </button>
           </div>
         </Card.Body>
       </Card>
-      {allPosts.map((userPost) =>
-        userPost["posts"].map((post) => (
-          <Card id="post" className="w-25 m-auto mt-2">
-            <Card.Body>
-              <div className="row">
-                <div className="col">
-                  <img src={person} alt="profilePic" />
-                  {userPost.firstName + " " + userPost.lastName}
-                </div>
+      {allPosts.map((thePost) => (
+        <Card
+          id="post"
+          key={thePost.post + " " + thePost.timeAndDate}
+          className="w-25 m-auto mt-2"
+        >
+          <Card.Body>
+            <div className="row">
+              <div className="col">
+                <img src={person} alt="profilePic" />
+                {thePost.author}
+                <br />
+                {thePost.timeAndDate}
               </div>
-              <div className="row justify-content-center">{post}</div>
-            </Card.Body>
-          </Card>
-        ))
-      )}
+            </div>
+            <div className="row justify-content-center">{thePost.post}</div>
+          </Card.Body>
+        </Card>
+      ))}
     </div>
   );
 };

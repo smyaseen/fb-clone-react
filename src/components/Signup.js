@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { signupUserThunk } from "./thunks";
 import { connect } from "react-redux";
-import { useHistory } from "react-router";
 
 const Signup = ({ closeModal, onSignupPressed }) => {
   const [email, setEmail] = useState("");
@@ -10,10 +9,7 @@ const Signup = ({ closeModal, onSignupPressed }) => {
   const [lastName, setLastName] = useState("");
   const [birthday, setBirthday] = useState("");
   const [gender, setGender] = useState("");
-  const history = useHistory();
-  const routeChangeToHome = () => {
-    history.push("/home");
-  };
+
   return (
     <form>
       <div className="mb-3">
@@ -121,7 +117,7 @@ const Signup = ({ closeModal, onSignupPressed }) => {
               type="button"
               onClick={async () => {
                 if (email && password) {
-                  let result = await onSignupPressed(
+                  await onSignupPressed(
                     email,
                     password,
                     firstName,
@@ -129,12 +125,6 @@ const Signup = ({ closeModal, onSignupPressed }) => {
                     birthday,
                     gender
                   );
-
-                  if (result) routeChangeToHome();
-                  else {
-                    setEmail("");
-                    setPassword("");
-                  }
 
                   closeModal();
                 }
